@@ -23,4 +23,8 @@ export class LinkedinService {
 
     return url;
   }
+  
+  authCallback(code: string) {
+    
+  }
 }
