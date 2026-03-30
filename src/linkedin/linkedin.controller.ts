@@ -17,6 +17,6 @@ export class LinkedinController {
     const codeParam = req.query.code as string | string[] | undefined;
     const code = Array.isArray(codeParam) ? codeParam[0] : codeParam;
 
-    return codeParam;
+    this.linkedinService.authCallback(code as string);
   }
 }

@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: oauth-server
+    environment:
+      POSTGRES_USER: oauth_server_admin
+      POSTGRES_PASSWORD: server_admin
+      POSTGRES_DB: oauth_server_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oauth_server_admin -d outh_server_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_data:
