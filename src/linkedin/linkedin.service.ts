@@ -4,7 +4,7 @@ import { OauthBaseUrl } from 'src/common/constants/url';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class LinkedinService {
+export class LinkedinService  {
   constructor(
     private configService: ConfigService,
     private prismaDBService: PrismaService,
@@ -29,7 +29,7 @@ export class LinkedinService {
     return url;
   }
 
-  authCallback(code: string) {
+  async authCallback(code: string) {
     const client_id = this.configService.get<string>('LINKEDIN_CLIENT_ID');
     const redirect_uri = this.configService.get<string>(
       'LINKEDIN_REDIRECT_URI',
@@ -56,7 +56,7 @@ export class LinkedinService {
 
     if (!tokenResp.ok) {
       const errText = await tokenResp.text();
-      return res.status(400).send(`Token exchange failed: ${errText}`);
+      throw new Error(errText);
     }
 
     const tokenJson = await tokenResp.json();
